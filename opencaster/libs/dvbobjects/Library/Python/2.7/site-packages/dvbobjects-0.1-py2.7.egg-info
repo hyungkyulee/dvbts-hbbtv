@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: dvbobjects
+Version: 0.1
+Summary: Python Package for dvb transport stream data generation (PAT, PMT, NIT, Object Carousel, ...)
+Home-page: UNKNOWN
+Author: Lorenzo Pallara
+Author-email: l.pallara@avalpa.com
+License: UNKNOWN
+Description: UNKNOWN
+Platform: UNKNOWN
