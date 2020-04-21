@@ -16,17 +16,18 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-import sys
+
+# import sys
 import os
 
-from dvbobjects.PSI.PAT import *
-from dvbobjects.PSI.NIT import *
-from dvbobjects.PSI.SDT import *
-from dvbobjects.PSI.PMT import *
-from dvbobjects.DVB.Descriptors import *
-from dvbobjects.MPEG.Descriptors import *
-from dvbobjects.MHP.AIT import *
-from dvbobjects.HBBTV.Descriptors import *
+# from dvbobjects.PSI.PAT import *
+# from dvbobjects.PSI.NIT import *
+# from dvbobjects.PSI.SDT import *
+# from dvbobjects.PSI.PMT import *
+# from dvbobjects.DVB.Descriptors import *
+# from dvbobjects.MPEG.Descriptors import *
+# from dvbobjects.MHP.AIT import *
+# from dvbobjects.HBBTV.Descriptors import *
 
 #
 # Shared values
@@ -46,9 +47,9 @@ ait_pid = [501, 502]
 
 
 # parameters reported into the AIT to signalize a broadband application.
-appli_name = ["Arquiva", "MIT XPERTS"] #application name
-appli_root = ["http://stage.sofiadigital.fi/dvb/dvb-i-reference-application/frontend/hbbtv/launcher/", "http://itv.mit-xperts.com/hbbtvtest/"] #URL base of transport_protocol_descriptor
-appli_path = ["index.php", "index.php"]  #initial_path_bytes of simple application descriptor. Soi the application path will be "http://my_application_root_path/myHbbTV-app/index.html"
+appli_name = ["EBU-CPA1", "EBU-CPA2"] #application name
+appli_root = ["https://devhbb.tvp.pl/hbbtv-35/apps/weather/", "http://itv.mit-xperts.com/hbbtvtest/"] #URL base of transport_protocol_descriptor
+appli_path = ["index.php", "index.php"]  #initial_path_bytes of simple application descriptor. So the application path will be "http://my_application_root_path/myHbbTV-app/index.html"
 organisationId = [10, 10]  	 # this is a demo value, dvb.org should assign an unique value
 applicationId = [1001, 1002] # this is a demo value. This number corresponds to a trusted application. 
 
@@ -271,21 +272,21 @@ out.write(nit.pack())
 out.close
 out = open("./nit.sec", "wb") # python  flush bug
 out.close
-os.system('./sec2ts 16 < ./nit.sec > ./nit.ts')
+os.system('/usr/local/bin/sec2ts 16 < ./nit.sec > ./nit.ts')
 
 out = open("./sdt.sec", "wb")
 out.write(sdt.pack())
 out.close
 out = open("./sdt.sec", "wb") # python   flush bug
 out.close
-os.system('./sec2ts 17 < ./sdt.sec > ./sdt.ts')
+os.system('/usr/local/bin/sec2ts 17 < ./sdt.sec > ./sdt.ts')
 
 out = open("./pat.sec", "wb")
 out.write(pat.pack())
 out.close
 out = open("./pat.sec", "wb") # python   flush bug
 out.close
-os.system('./sec2ts 0 < ./pat.sec > ./pat.ts')
+os.system('/usr/local/bin/sec2ts 0 < ./pat.sec > ./pat.ts')
 
 for i in range(0, 2):
 	
@@ -294,13 +295,13 @@ for i in range(0, 2):
 	out.close
 	out = open("./pmt"+str(i)+".sec", "wb") # python   flush bug
 	out.close
-	os.system('./sec2ts ' + str(pmt_pid[i]) + ' < ./pmt'+str(i)+'.sec > ./pmt'+str(i)+'.ts')
+	os.system('/usr/local/bin/sec2ts ' + str(pmt_pid[i]) + ' < ./pmt'+str(i)+'.sec > ./pmt'+str(i)+'.ts')
 
 	out = open("./ait"+str(i)+".sec", "wb")
 	out.write(ait[i].pack())
 	out.close
 	out = open("./ait"+str(i)+".sec", "wb") # python   flush bug
 	out.close
-	os.system('./sec2ts ' + str(ait_pid[i]) + ' < ./ait'+str(i)+'.sec > ./ait'+str(i)+'.ts')
+	os.system('/usr/local/bin/sec2ts ' + str(ait_pid[i]) + ' < ./ait'+str(i)+'.sec > ./ait'+str(i)+'.ts')
 
 os.system('rm *.sec') # deleting of the section files.
